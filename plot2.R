@@ -1,0 +1,15 @@
+# import data
+library(readr)
+value <- read_delim("household_power_consumption.txt", ";", escape_double = FALSE, trim_ws = TRUE)
+z <- subset(value,Date == "2/2/2007")
+y<- subset(value, Date == "1/2/2007")
+x<- rbind(y,z)
+x$Global_active_power<- as.numeric(x$Global_active_power)
+dat <- paste(x$Date,x$Time) 
+dat <-strptime(dat,format = "%d/%m/%Y %H:%M:%S")
+png(filename = "plot2.png")
+plot(dat,x$Global_active_power,pch="",ylab='', xlab = '')
+lines(dat,x$Global_active_power, type = "l")
+title (y= "Global Active Power (kilowatts)")
+
+dev.off()
